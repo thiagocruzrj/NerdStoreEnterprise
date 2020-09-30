@@ -8,12 +8,12 @@ namespace NSE.Identidade.API.Controllers
     public class AuthController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userInManager)
+        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
-            _userInManager = userInManager;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
@@ -27,6 +27,16 @@ namespace NSE.Identidade.API.Controllers
                 Email = usuarioRegistro.Email,
                 EmailConfirmed = true
             };
+
+            var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
+
+            if(result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)

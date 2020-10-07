@@ -44,6 +44,12 @@ namespace NSE.Identidade.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(s => 
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

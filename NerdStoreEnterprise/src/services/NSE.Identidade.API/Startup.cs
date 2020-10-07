@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using NSE.Identidade.API.Data;
+using System;
 
 namespace NSE.Identidade.API
 {
@@ -28,6 +30,16 @@ namespace NSE.Identidade.API
                 .AddDefaultTokenProviders();
 
             services.AddControllers();
+
+            services.AddSwaggerGen(s => {
+                s.SwaggerDoc("v1", new OpenApiInfo 
+                {
+                    Title = "NerdStore Enterprise Identity Api",
+                    Description = "Api created to increase base microservices communication skills",
+                    Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
+                    License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensourse.org/licenses/MIT") }
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -22,5 +22,10 @@ namespace NSE.WebApp.MVC.Extensions
 
             context.Response.StatusCode = (int)statusCode;
         }
+
+        private static void HandleCircuitBreakerExceptionAsync(HttpContext context)
+        {
+            context.Response.Redirect("/sistema-indisponivel");
+        }
     }
 }

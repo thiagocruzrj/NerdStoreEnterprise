@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NSE.Identidade.API.Models
@@ -40,5 +41,11 @@ namespace NSE.Identidade.API.Models
         public string Id { get; set; }
         public string Email { get; set; }
         public IEnumerable<UsuarioClaim> Claims { get; set; }
+    }
+
+    public class UsuarioClaim
+    {
+        public string Value { get; set; }
+        public string Type { get; set; }
     }
 }

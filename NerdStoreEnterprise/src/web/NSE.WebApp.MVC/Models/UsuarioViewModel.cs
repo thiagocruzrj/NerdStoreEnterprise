@@ -36,4 +36,11 @@ namespace NSE.WebApp.MVC.Models
         public UsuarioToken UsuarioToken { get; set; }
         public ResponseResult ResponseResult { get; set; }
     }
+
+    public class UsuarioToken
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public IEnumerable<UsuarioClaim> Claims { get; set; }
+    }
 }

@@ -28,4 +28,12 @@ namespace NSE.WebApp.MVC.Models
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Senha { get; set; }
     }
+
+    public class UsuarioRespostaLogin
+    {
+        public string AccessToken { get; set; }
+        public double ExpiresIn { get; set; }
+        public UsuarioToken UsuarioToken { get; set; }
+        public ResponseResult ResponseResult { get; set; }
+    }
 }

@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using NSE.Identidade.API.Configuration;
-using System;
 
 namespace NSE.Identidade.API
 {
@@ -29,28 +27,13 @@ namespace NSE.Identidade.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfiguration(Configuration);
-
             services.AddApiConfiguration();
-
-            services.AddSwaggerGen(s => {
-                s.SwaggerDoc("v1", new OpenApiInfo 
-                {
-                    Title = "NerdStore Enterprise Identity Api",
-                    Description = "Api created to increase base microservices communication skills",
-                    Contact = new OpenApiContact() { Name = "Thiago Cruz", Email = "thagocruz@gmail.com" },
-                    License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensourse.org/licenses/MIT") }
-                });
-            });
+            services.AddSwaggerConfiguration();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(s => 
-            {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            });
-
+            app.UseSwaggerConfiguration();
             app.UserIdentityConfiguration();
             app.UseApiConfiguration(env);
         }

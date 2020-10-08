@@ -52,5 +52,10 @@ namespace NSE.Identidade.API.Controllers
 
             return BadRequest();
         }
+
+        private async Task<UsuarioRespostaLogin> GerarJwt(string email)
+        {
+
+        }
     }
 }

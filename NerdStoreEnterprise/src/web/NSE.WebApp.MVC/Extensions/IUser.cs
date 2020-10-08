@@ -60,7 +60,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public bool PossuiRole(string role)
         {
-            throw new NotImplementedException();
+            return _accessor.HttpContext.User.IsInRole(role);
         }
     }
 }

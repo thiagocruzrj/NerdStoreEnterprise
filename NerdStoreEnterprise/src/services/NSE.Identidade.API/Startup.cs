@@ -34,7 +34,6 @@ namespace NSE.Identidade.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwaggerConfiguration();
-            app.UserIdentityConfiguration();
             app.UseApiConfiguration(env);
         }
     }

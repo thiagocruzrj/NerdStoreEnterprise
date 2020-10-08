@@ -17,5 +17,10 @@ namespace NSE.WebApp.MVC.Extensions
             }
             return sBuilder.ToString();
         }
+
+        public static string FormatoMoeda(this RazorPage page, decimal valor)
+        {
+            return valor > 0 ? string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", valor) : "Gratuito";
+        }
     }
 }

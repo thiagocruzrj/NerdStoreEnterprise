@@ -160,6 +160,21 @@ namespace NSE.Identidade.API.Controllers
             return tokenHandler.WriteToken(token);
         }
 
+        private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+        {
+            return new UsuarioRespostaLogin
+            {
+                AccessToken = encodedToken,
+                ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
+                UsuarioToken = new UsuarioToken
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Claims = claims.Select(c => new UsuarioClaim { Type = c.Type, Value = c.Value })
+                }
+            };
+        }
+
         private static long ToUnixEpochDate(DateTime date)
             => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
     }

@@ -16,4 +16,51 @@ namespace NSE.WebApp.MVC.Extensions
         IEnumerable<Claim> ObterClaims();
         HttpContext ObterHttpContext();
     }
+
+    public class AspNetUser : IUser
+    {
+        private readonly IHttpContextAccessor _accessor;
+
+        public AspNetUser(IHttpContextAccessor accessor)
+        {
+            _accessor = accessor;
+        }
+
+        public string Name => throw new NotImplementedException();
+
+        public bool EstaAutenticado()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Claim> ObterClaims()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpContext ObterHttpContext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ObterUserEmail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid ObterUserId()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string ObterUserToken()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PossuiRole(string role)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -35,7 +35,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public IEnumerable<Claim> ObterClaims()
         {
-            throw new NotImplementedException();
+            return _accessor.HttpContext.User.Claims;
         }
 
         public HttpContext ObterHttpContext()

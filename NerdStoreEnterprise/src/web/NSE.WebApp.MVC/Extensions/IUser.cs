@@ -45,7 +45,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public string ObterUserEmail()
         {
-            throw new NotImplementedException();
+            return EstaAutenticado() ? _accessor.HttpContext.User.GetUserEmail() : "";
         }
 
         public Guid ObterUserId()

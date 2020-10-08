@@ -50,12 +50,12 @@ namespace NSE.WebApp.MVC.Extensions
 
         public Guid ObterUserId()
         {
-            throw new NotImplementedException();
+            return EstaAutenticado() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
         }
 
         public string ObterUserToken()
         {
-            throw new NotImplementedException();
+            return EstaAutenticado() ? _accessor.HttpContext.User.GetUserToken() : "";
         }
 
         public bool PossuiRole(string role)

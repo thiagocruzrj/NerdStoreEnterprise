@@ -42,6 +42,14 @@ namespace NSE.WebApp.MVC.Controllers
             return RedirectToAction("Index", "Catalogo");
         }
 
+        [HttpGet]
+        [Route("login")]
+        public IActionResult Login(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
         private async Task RealizarLogin(UsuarioRespostaLogin resposta)
         {
             var token = ObterTokenFormatado(resposta.AccessToken);

@@ -115,6 +115,7 @@ namespace NSE.Identidade.API.Controllers
                 Issuer = _appSettings.Emissor,
                 Audience = _appSettings.ValidoEm,
                 Subject = identityClaims,
+                NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });

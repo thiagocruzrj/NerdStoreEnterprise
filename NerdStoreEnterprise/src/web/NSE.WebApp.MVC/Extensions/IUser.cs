@@ -63,4 +63,18 @@ namespace NSE.WebApp.MVC.Extensions
             return _accessor.HttpContext.User.IsInRole(role);
         }
     }
+
+    public static class ClaimsPrincipalExtensions
+    {
+        public static string GetUserId(this ClaimsPrincipal principal)
+        {
+            if (principal == null)
+            {
+                throw new ArgumentException(nameof(principal));
+            }
+
+            var claim = principal.FindFirst("sub");
+            return claim?.Value;
+        }
+    }
 }

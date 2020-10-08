@@ -10,5 +10,12 @@ namespace NSE.WebApp.MVC.Controllers
         {
             _autenticacaoService = autenticacaoService;
         }
+
+        [HttpGet]
+        [Route("nova-conta")]
+        public IActionResult Registro()
+        {
+            return View();
+        }
     }
 }

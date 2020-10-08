@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace NSE.Identidade.API.Controllers
     {
         protected ICollection<string> Erros = new List<string>();
 
-        protected ActionResult CustomResult(object result = null)
+        protected ActionResult CustomResponse(object result = null)
         {
             if(OperacaoValida())
                 return Ok(result);
@@ -18,6 +19,17 @@ namespace NSE.Identidade.API.Controllers
             {
                 {"Mensagens", Erros.ToArray() }
             }));
+        }
+
+        protected ActionResult CustomResponse(ModelStateDictionary modelState)
+        {
+            var erros = modelState.Values.SelectMany(e => e.Errors);
+            foreach (var erro in erros)
+            {
+                AdicionarErroProcessamento(erro.ErrorMessage);
+            }
+
+            return CustomResponse();
         }
 
         protected bool OperacaoValida()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSE.Identidade.API.Models;
 using NSE.WebApp.MVC.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Controllers
@@ -36,5 +37,9 @@ namespace NSE.WebApp.MVC.Controllers
             return RedirectToAction("Index", "Catalogo");
         }
 
+        private static JwtSecurityToken ObterTokenFormatado(string jwtToken)
+        {
+            return new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
+        }
     }
 }

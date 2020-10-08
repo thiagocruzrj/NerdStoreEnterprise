@@ -20,6 +20,19 @@ namespace NSE.WebApp.MVC.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [Route("nova-conta")]
+        public async Task<IActionResult> Registro(UsuarioRegistro usuarioRegistro)
+        {
+            if (!ModelState.IsValid) return View(usuarioRegistro);
+
+            var resposta = await _autenticacaoService.Registro(usuarioRegistro);
+
+            if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
+
+            await RealizarLogin(resposta);
+
             return RedirectToAction("Index", "Catalogo");
         }
 

@@ -50,6 +50,24 @@ namespace NSE.WebApp.MVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(UsuarioLogin usuarioLogin, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (!ModelState.IsValid) return View(usuarioLogin);
+
+            var resposta = await _autenticacaoService.Login(usuarioLogin);
+
+            if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
+
+            await RealizarLogin(resposta);
+
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Catalogo");
+
+            return LocalRedirect(returnUrl);
+        }
+
         private async Task RealizarLogin(UsuarioRespostaLogin resposta)
         {
             var token = ObterTokenFormatado(resposta.AccessToken);

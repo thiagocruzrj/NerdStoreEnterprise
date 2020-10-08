@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NSE.Identidade.API.Configuration;
 using NSE.Identidade.API.Data;
 using NSE.Identidade.API.Extensions;
 using System;
@@ -67,7 +68,7 @@ namespace NSE.Identidade.API
                 };
             });
 
-            services.AddControllers();
+            services.AddApiConfiguration();
 
             services.AddSwaggerGen(s => {
                 s.SwaggerDoc("v1", new OpenApiInfo 
@@ -88,22 +89,7 @@ namespace NSE.Identidade.API
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-            app.UseAuthentication();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseApiConfiguration(env);
         }
     }
 }

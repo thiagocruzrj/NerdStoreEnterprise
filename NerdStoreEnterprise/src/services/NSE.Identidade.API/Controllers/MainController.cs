@@ -11,7 +11,13 @@ namespace NSE.Identidade.API.Controllers
 
         protected ActionResult CustomResult(object result = null)
         {
+            if(OperacaoValida())
+                return Ok(result);
 
+            return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
+            {
+                {"Mensagens", Errors.ToArray() }
+            }));
         }
 
         protected bool OperacaoValida()

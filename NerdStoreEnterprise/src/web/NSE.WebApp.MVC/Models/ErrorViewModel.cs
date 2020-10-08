@@ -15,4 +15,9 @@ namespace NSE.WebApp.MVC.Models
         public int Status { get; set; }
         public ResponseErrorMessages Errors { get; set; }
     }
+
+    public class ResponseErrorMessages
+    {
+        public List<string> Mensagens { get; set; }
+    }
 }

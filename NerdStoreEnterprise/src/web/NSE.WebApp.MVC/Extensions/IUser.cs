@@ -30,7 +30,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public bool EstaAutenticado()
         {
-            throw new NotImplementedException();
+            return _accessor.HttpContext.User.Identity.IsAuthenticated;
         }
 
         public IEnumerable<Claim> ObterClaims()

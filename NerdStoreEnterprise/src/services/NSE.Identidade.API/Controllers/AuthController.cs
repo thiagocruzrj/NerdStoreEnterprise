@@ -33,7 +33,7 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var user = new IdentityUser
             {
@@ -45,12 +45,14 @@ namespace NSE.Identidade.API.Controllers
             var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
 
             if(result.Succeeded)
+                return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+
+            foreach (var error in result.Errors)
             {
-                await _signInManager.SignInAsync(user, false);
-                return Ok(await GerarJwt(usuarioRegistro.Email));
+                AdicionarErroProcessamento(error.Description);
             }
 
-            return BadRequest();
+            return CustomResponse();
         }
 
         [HttpPost("autenticar")]

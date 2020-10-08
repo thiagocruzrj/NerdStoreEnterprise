@@ -58,13 +58,20 @@ namespace NSE.Identidade.API.Controllers
         [HttpPost("autenticar")]
         public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
         {
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
 
-            if (result.Succeeded) return Ok(await GerarJwt(usuarioLogin.Email));
+            if (result.Succeeded) return CustomResponse(await GerarJwt(usuarioLogin.Email));
 
-            return BadRequest();
+            if(result.IsLockedOut)
+            {
+                AdicionarErroProcessamento("Usuario temporariamente bloqueado por tentativas invalidas");
+                return CustomResponse();
+            }
+
+            AdicionarErroProcessamento("Usuario ou Senha incorretos");
+            return CustomResponse();
         }
 
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)

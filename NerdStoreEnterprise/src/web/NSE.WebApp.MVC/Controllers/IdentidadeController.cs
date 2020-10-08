@@ -1,4 +1,7 @@
-﻿using NSE.WebApp.MVC.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using NSE.Identidade.API.Models;
+using NSE.WebApp.MVC.Services;
+using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Controllers
 {
@@ -17,5 +20,8 @@ namespace NSE.WebApp.MVC.Controllers
         {
             return View();
         }
+            return RedirectToAction("Index", "Catalogo");
+        }
+
     }
 }

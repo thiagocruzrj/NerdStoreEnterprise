@@ -35,9 +35,21 @@ namespace NSE.WebApp.MVC.Services
             return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
         }
 
-        public Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
+        public async Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
         {
-            throw new NotImplementedException();
+            var registroContent = ObterConteudo(usuarioRegistro);
+
+            var response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
+
+            if (!TratarErrosResponse(response))
+            {
+                return new UsuarioRespostaLogin
+                {
+                    ResponseResult = await DeserializarObjetoResponse<ResponseResult>(response)
+                };
+            }
+
+            return await DeserializarObjetoResponse<UsuarioRespostaLogin>(response);
         }
     }
 }

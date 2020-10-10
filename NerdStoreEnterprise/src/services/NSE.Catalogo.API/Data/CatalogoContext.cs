@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NSE.Catalog.API.Models;
+using NSE.Catalogo.API.Models;
 using System.Linq;
 
-namespace NSE.Catalog.API.Data
+namespace NSE.Catalogo.API.Data
 {
     public class CatalogoContext : DbContext
     {

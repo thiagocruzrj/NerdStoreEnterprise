@@ -1,7 +1,7 @@
 ﻿using NSE.Core.DomainObjects;
 using System;
 
-namespace NSE.Catalog.API.Models
+namespace NSE.Catalogo.API.Models
 {
     public class Produto : Entity
     {

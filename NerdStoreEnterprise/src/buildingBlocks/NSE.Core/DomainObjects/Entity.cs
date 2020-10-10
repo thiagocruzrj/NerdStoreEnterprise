@@ -30,14 +30,8 @@ namespace NSE.Core.DomainObjects
 
         public static bool operator !=(Entity a, Entity b) => !(a == b);
 
-        public override int GetHashCode()
-        {
-            return (GetType().GetHashCode() * 907) + Id.GetHashCode();
-        }
+        public override int GetHashCode() => (GetType().GetHashCode() * 907) + Id.GetHashCode();
 
-        public override string ToString()
-        {
-            return $"{GetType().Name} [Id={Id}]";
-        }
+        public override string ToString() => $"{GetType().Name} [Id={Id}]";
     }
 }

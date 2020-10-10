@@ -28,10 +28,7 @@ namespace NSE.Core.DomainObjects
             return a.Equals(b);
         }
 
-        public static bool operator !=(Entity a, Entity b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Entity a, Entity b) => !(a == b);
 
         public override int GetHashCode()
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Catalog.API.Models;
+using System.Linq;
 
 namespace NSE.Catalog.API.Data
 {
@@ -11,6 +12,10 @@ namespace NSE.Catalog.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
+                e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
+                property.SetColumnType("varchar(250)");
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);
         }
     }

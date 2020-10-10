@@ -1,36 +1,37 @@
-﻿using NSE.Catalogo.API.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NSE.Catalogo.API.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NSE.Catalogo.API.Data.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        public Task<IEnumerable<Produto>> ObterTodos()
+        private readonly CatalogoContext _context;
+
+        public ProdutoRepository(CatalogoContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<Produto> ObterPorId(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Produto>> ObterTodos() => await _context.Produtos.AsNoTracking().ToListAsync();
+
+        public async Task<Produto> ObterPorId(Guid id) => await _context.Produtos.FindAsync(id);
 
         public void Adicionar(Produto produto)
         {
-            throw new NotImplementedException();
+            _context.Produtos.AddAsync(produto);
         }
 
         public void Atualizar(Produto produto)
         {
-            throw new NotImplementedException();
+            _context.Produtos.Update(produto);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context?.Dispose();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Catalogo.API.Models;
+using NSE.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace NSE.Catalogo.API.Data.Repository
 {
@@ -14,6 +16,8 @@ namespace NSE.Catalogo.API.Data.Repository
         {
             _context = context;
         }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public async Task<IEnumerable<Produto>> ObterTodos() => await _context.Produtos.AsNoTracking().ToListAsync();
 

@@ -16,5 +16,11 @@ namespace NSE.Catalogo.API.Controllers
         {
             _produtoRepository = produtoRepository;
         }
+
+        [HttpGet("catalogo/produtos")]
+        public async Task<IEnumerable<Produto>> Index()
+        {
+            return await _produtoRepository.ObterTodos();
+        }
     }
 }

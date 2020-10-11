@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace NSE.Identidade.API.Controllers
 {
@@ -12,12 +12,14 @@ namespace NSE.Identidade.API.Controllers
 
         protected ActionResult CustomResponse(object result = null)
         {
-            if(OperacaoValida())
+            if (OperacaoValida())
+            {
                 return Ok(result);
+            }
 
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
-                {"Mensagens", Erros.ToArray() }
+                { "Mensagens", Erros.ToArray() }
             }));
         }
 

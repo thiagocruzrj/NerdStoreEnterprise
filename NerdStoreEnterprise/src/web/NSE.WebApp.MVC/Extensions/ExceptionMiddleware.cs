@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Polly.CircuitBreaker;
 using Refit;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Extensions
 {

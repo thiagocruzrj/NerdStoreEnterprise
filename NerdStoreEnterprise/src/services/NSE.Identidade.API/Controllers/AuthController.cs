@@ -10,11 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identidade.API.Models;
-using NSE.WebApi.Core.Identidade;
+using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Identidade.API.Controllers
 {
-    [ApiController]
     [Route("api/identidade")]
     public class AuthController : MainController
     {
@@ -22,7 +21,7 @@ namespace NSE.Identidade.API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        public AuthController(SignInManager<IdentityUser> signInManager,
+        public AuthController(SignInManager<IdentityUser> signInManager, 
                               UserManager<IdentityUser> userManager,
                               IOptions<AppSettings> appSettings)
         {
@@ -45,8 +44,10 @@ namespace NSE.Identidade.API.Controllers
 
             var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
+            {
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+            }
 
             foreach (var error in result.Errors)
             {
@@ -61,17 +62,21 @@ namespace NSE.Identidade.API.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
+            var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
+                false, true);
 
-            if (result.Succeeded) return CustomResponse(await GerarJwt(usuarioLogin.Email));
-
-            if(result.IsLockedOut)
+            if (result.Succeeded)
             {
-                AdicionarErroProcessamento("Usuario temporariamente bloqueado por tentativas invalidas");
+                return CustomResponse(await GerarJwt(usuarioLogin.Email));
+            }
+
+            if (result.IsLockedOut)
+            {
+                AdicionarErroProcessamento("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse();
             }
 
-            AdicionarErroProcessamento("Usuario ou Senha incorretos");
+            AdicionarErroProcessamento("Usuário ou Senha incorretos");
             return CustomResponse();
         }
 
@@ -115,7 +120,6 @@ namespace NSE.Identidade.API.Controllers
                 Issuer = _appSettings.Emissor,
                 Audience = _appSettings.ValidoEm,
                 Subject = identityClaims,
-                NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });

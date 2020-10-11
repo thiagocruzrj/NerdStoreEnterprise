@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 using System.Security.Claims;
 
@@ -20,6 +20,21 @@ namespace NSE.WebApi.Core.Identidade
         public ClaimsAuthorizeAttribute(string claimName, string claimValue) : base(typeof(RequisitoClaimFilter))
         {
             Arguments = new object[] { new Claim(claimName, claimValue) };
+        }
+    }
+
+    public class RequisitoClaimFilter : IAuthorizationFilter
+    {
+        private readonly Claim _claim;
+
+        public RequisitoClaimFilter(Claim claim)
+        {
+            _claim = claim;
+        }
+
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

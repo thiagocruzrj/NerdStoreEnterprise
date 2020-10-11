@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NSE.Catalogo.API.Models;
 
-namespace NSE.Catalogo.API.Data
+namespace NSE.Catalogo.API.Data.Mappings
 {
     public class ProdutoMapping : IEntityTypeConfiguration<Produto>
     {
@@ -16,7 +16,7 @@ namespace NSE.Catalogo.API.Data
 
             builder.Property(c => c.Descricao)
                 .IsRequired()
-                .HasColumnType("varchar(250)");
+                .HasColumnType("varchar(500)");
 
             builder.Property(c => c.Imagem)
                 .IsRequired()

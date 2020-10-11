@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Services
@@ -14,6 +15,21 @@ namespace NSE.WebApp.MVC.Services
 
     public class CatalogoService : ICatalogoService
     {
+        private readonly HttpClient _httpClient;
 
+        public CatalogoService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
+        public async Task<ProdutoViewModel> ObterPorId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

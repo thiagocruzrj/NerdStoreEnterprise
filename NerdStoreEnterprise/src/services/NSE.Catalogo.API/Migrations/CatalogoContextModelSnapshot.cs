@@ -33,7 +33,7 @@ namespace NSE.Catalogo.API.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("Imagem")
                         .IsRequired()

@@ -34,7 +34,10 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"/catalogo/produtos/");
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<IEnumerable<ProdutoViewModel>>(response);
         }
     }
 }

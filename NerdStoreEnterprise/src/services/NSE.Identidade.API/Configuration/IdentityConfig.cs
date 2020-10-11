@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Logging;
 using NSE.Identidade.API.Data;
 using NSE.Identidade.API.Extensions;
-using NSE.WebApi.Core.Identidade;
+using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Identidade.API.Configuration
 {

@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace NSE.WebApi.Core.Identidade
 {
-    public class CustomAuthorize
+    public class CustomAuthorization
     {
         public static bool ValidarClaimsUsuario(HttpContext context, string claimName, string claimValue)
         {
@@ -34,7 +34,16 @@ namespace NSE.WebApi.Core.Identidade
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            throw new System.NotImplementedException();
+            if(!context.HttpContext.User.Identity.IsAuthenticated)
+            {
+                context.Result = new StatusCodeResult(401);
+                return;
+            }
+
+            if(!CustomAuthorization.ValidarClaimsUsuario(context.HttpContext, _claim.Type, _claim.Value))
+            {
+                context.Result = new StatusCodeResult(403);
+            }
         }
     }
 }

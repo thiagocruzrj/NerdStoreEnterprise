@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NSE.Catalogo.API.Models;
-using NSE.Core.Data;
+﻿using NSE.Catalogo.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Transactions;
+using Microsoft.EntityFrameworkCore;
+using NSE.Core.Data;
 
 namespace NSE.Catalogo.API.Data.Repository
 {
@@ -23,15 +22,9 @@ namespace NSE.Catalogo.API.Data.Repository
 
         public async Task<Produto> ObterPorId(Guid id) => await _context.Produtos.FindAsync(id);
 
-        public void Adicionar(Produto produto)
-        {
-            _context.Produtos.AddAsync(produto);
-        }
+        public void Adicionar(Produto produto) => _context.Produtos.Add(produto);
 
-        public void Atualizar(Produto produto)
-        {
-            _context.Produtos.Update(produto);
-        }
+        public void Atualizar(Produto produto) => _context.Produtos.Update(produto);
 
         public void Dispose()
         {

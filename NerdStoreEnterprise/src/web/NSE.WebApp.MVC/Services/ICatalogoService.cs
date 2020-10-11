@@ -14,7 +14,7 @@ namespace NSE.WebApp.MVC.Services
         Task<ProdutoViewModel> ObterPorId(Guid id);
     }
 
-    public class CatalogoService : ICatalogoService
+    public class CatalogoService : Service, ICatalogoService
     {
         private readonly HttpClient _httpClient;
 
@@ -26,7 +26,10 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<ProdutoViewModel> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            var response = await _httpClient.GetAsync($"/catalogo/produtos/{id}");
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<ProdutoViewModel>(response);
         }
 
         public async Task<IEnumerable<ProdutoViewModel>> ObterTodos()

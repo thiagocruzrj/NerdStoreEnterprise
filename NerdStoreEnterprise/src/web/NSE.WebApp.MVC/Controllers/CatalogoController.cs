@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace NSE.WebApp.MVC.Controllers
@@ -9,6 +10,13 @@ namespace NSE.WebApp.MVC.Controllers
         [Route("")]
         [Route("vitrine")]
         public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("produto-detalhe/{id}")]
+        public async Task<IActionResult> ProdutoDetalhe(Guid id)
         {
             return View();
         }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NSE.Cliente.API.Data;
+using NSE.WebAPI.Core.Identidade;
 
 namespace NSE.Cliente.API.Configuration
 {
@@ -11,7 +13,7 @@ namespace NSE.Cliente.API.Configuration
     {
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ClienteContext>(options =>
+            services.AddDbContext<ClientesContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();

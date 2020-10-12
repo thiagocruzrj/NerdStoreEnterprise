@@ -10,8 +10,7 @@ namespace NSE.Cliente.API.Data
 {
     public class ClientesContext : DbContext, IUnitOfWork
     {
-        public ClientesContext(DbContextOptions<ClientesContext> options)
-            : base(options)
+        public ClientesContext(DbContextOptions<ClientesContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
@@ -32,5 +31,7 @@ namespace NSE.Cliente.API.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
         }
+
+        public async Task<bool> Commit() => await base.SaveChangesAsync() > 0;
     }
 }

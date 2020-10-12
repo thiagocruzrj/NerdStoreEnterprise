@@ -21,11 +21,16 @@ namespace NSE.Cliente.API.Models
         public Email Email { get; private set; }
         public Cpf Cpf { get; private set; }
         public bool Excluido { get; private set; }
-        public Endreco Endreco { get; private set; }
+        public Endereco Endereco { get; private set; }
 
         public void TrocarEmail(string email)
         {
             Email = new Email(email);
+        }
+
+        public void AlterarEndereco(Endereco endereco)
+        {
+            Endereco = endereco;
         }
     }
 }

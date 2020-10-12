@@ -3,9 +3,9 @@ using System;
 
 namespace NSE.Cliente.API.Models
 {
-    public class Endreco : Entity
+    public class Endereco : Entity
     {
-        public Endreco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
+        public Endereco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
         {
             Logradouro = logradouro;
             Numero = numero;
@@ -17,7 +17,7 @@ namespace NSE.Cliente.API.Models
         }
 
         // EF Relation
-        protected Endreco() { }
+        protected Endereco() { }
 
         public Guid ClientId { get; private set; }
         public string Logradouro { get; private set; }

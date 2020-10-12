@@ -16,9 +16,9 @@ namespace NSE.Core.Mediator
 
         public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command => await _mediator.Send(comando);
 
-        public Task PublicarEvento<T>(T evento) where T : Event
+        public async Task PublicarEvento<T>(T evento) where T : Event
         {
-            throw new System.NotImplementedException();
+            await _mediator.Publish(evento);
         }
     }
 }

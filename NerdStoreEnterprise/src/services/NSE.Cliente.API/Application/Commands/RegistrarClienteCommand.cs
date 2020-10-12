@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using NSE.Core.DomainObjects;
 using NSE.Core.Messages;
 using System;
 
@@ -44,12 +45,12 @@ namespace NSE.Clientes.API.Application.Commands
 
         protected static bool TerCpfValido(string cpf)
         {
-            return Core.DomainObjects.Cpf.Validar(cpf);
+            return Cpf.Validar(cpf);
         }
 
         protected static bool TerEmailValido(string email)
         {
-            return Core.DomainObjects.Email.Validar(email);
+            return Email.Validar(email);
         }
     }
 }

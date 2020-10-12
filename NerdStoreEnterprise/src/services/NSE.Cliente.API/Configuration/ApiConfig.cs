@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NSE.Cliente.API.Data;
+using NSE.Clientes.API.Data;
 using NSE.WebAPI.Core.Identidade;
 
-namespace NSE.Cliente.API.Configuration
+namespace NSE.Clientes.API.Configuration
 {
     public static class ApiConfig
     {

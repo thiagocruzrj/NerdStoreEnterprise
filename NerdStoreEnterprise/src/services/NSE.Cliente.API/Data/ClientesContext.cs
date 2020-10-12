@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NSE.Cliente.API.Models;
+using NSE.Clientes.API.Models;
 using NSE.Core.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NSE.Cliente.API.Data
+namespace NSE.Clientes.API.Data
 {
     public sealed class ClientesContext : DbContext, IUnitOfWork
     {
@@ -30,6 +30,6 @@ namespace NSE.Cliente.API.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
         }
 
-        public async Task<bool> Commit() => await base.SaveChangesAsync() > 0;
+        public async Task<bool> Commit() => await SaveChangesAsync() > 0;
     }
 }

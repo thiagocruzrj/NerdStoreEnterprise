@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NSE.Cliente.API.Data;
+using NSE.Clientes.API.Data;
 
-namespace NSE.Cliente.API.Configuration
+namespace NSE.Clientes.API.Configuration
 {
     public static class DependencyInjectionConfig
     {

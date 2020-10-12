@@ -31,9 +31,7 @@ namespace NSE.Clientes.API.Application.Commands
 
             _clienteRepository.Adicionar(cliente);
 
-            if (!await _clienteRepository.UnitOfWork.Commit()) AdicionarErro("Houve um erro ao persistir o novo cliente na base.");
-
-            return message.ValidationResult;
+            return await PersistirDados(_clienteRepository.UnitOfWork);
         }
     }
 }

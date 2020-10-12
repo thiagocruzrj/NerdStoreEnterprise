@@ -7,8 +7,8 @@ namespace NSE.Cliente.API.Models
         public Cliente(string nome, string email, string cpf)
         {
             Nome = nome;
-            Email = email;
-            Cpf = cpf;
+            Email = new Email(email);
+            Cpf = new Cpf(cpf);
             Excluido = false;
         }
 
@@ -16,8 +16,8 @@ namespace NSE.Cliente.API.Models
         protected Cliente() { }
 
         public string Nome { get; private set; }
-        public string Email { get; private set; }
-        public string Cpf { get; private set; }
+        public Email Email { get; private set; }
+        public Cpf Cpf { get; private set; }
         public bool Excluido { get; private set; }
         public Endreco Endreco { get; private set; }
     }

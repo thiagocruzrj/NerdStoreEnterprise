@@ -1,16 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Cliente.API.Models;
 using NSE.Core.Data;
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace NSE.Cliente.API.Data
 {
-    public class ClientesContext : DbContext, IUnitOfWork
+    public sealed class ClienteContext : DbContext, IUnitOfWork
     {
-        public ClientesContext(DbContextOptions<ClientesContext> options) : base(options)
+        public ClienteContext(DbContextOptions<ClienteContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
@@ -29,7 +27,7 @@ namespace NSE.Cliente.API.Data
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClienteContext).Assembly);
         }
 
         public async Task<bool> Commit() => await base.SaveChangesAsync() > 0;

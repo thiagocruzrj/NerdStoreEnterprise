@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NSE.Clientes.API.Models;
 using NSE.Core.Data;
+using NSE.Core.DomainObjects;
+using NSE.Core.Mediator;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,10 +10,13 @@ namespace NSE.Clientes.API.Data
 {
     public sealed class ClientesContext : DbContext, IUnitOfWork
     {
-        public ClientesContext(DbContextOptions<ClientesContext> options) : base(options)
+
+        private readonly MediatorHandler _mediator;
+        public ClientesContext(DbContextOptions<ClientesContext> options, MediatorHandler mediator) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
+            _mediator = mediator;
         }
 
         public DbSet<Cliente> Clientes { get; set; }
@@ -30,6 +35,36 @@ namespace NSE.Clientes.API.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
         }
 
-        public async Task<bool> Commit() => await SaveChangesAsync() > 0;
+        public async Task<bool> Commit()
+        {
+            var sucesso = await base.SaveChangesAsync() > 0;
+            if (sucesso) await _mediator.PublicarEvento();
+
+            return sucesso;
+        }
+    }
+
+    public static class MediatorExtension
+    {
+        public static async Task PublicarEventos<T>(this IMediatorHandler mediator, T ctx) where T : DbContext
+        {
+            var domainEntities = ctx.ChangeTracker
+                .Entries<Entity>()
+                .Where(x => x.Entity.Notificacoes != null && x.Entity.Notificacoes.Any());
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.Notificacoes)
+                .ToList();
+
+            domainEntities.ToList()
+                .ForEach(entity => entity.Entity.LimparEventos());
+
+            var tasks = domainEvents
+                .Select(async (domainEvent) => {
+                    await mediator.PublicarEvento(domainEvent);
+                });
+
+            await Task.WhenAll(tasks);
+        }
     }
 }

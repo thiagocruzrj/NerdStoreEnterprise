@@ -22,6 +22,11 @@ namespace NSE.Core.DomainObjects
             _notificacoes?.Remove(eventItem);
         }
 
+        public void LimparEventos()
+        {
+            _notificacoes?.Clear();
+        }
+
         public override bool Equals(object obj)
         {
             var compareTo = obj as Entity;

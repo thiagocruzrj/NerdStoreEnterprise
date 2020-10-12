@@ -29,7 +29,7 @@ namespace NSE.Clientes.API.Data.Repositories
 
         public void Dispose()
         {
-            _contexto?.Dispose();
+            _contexto.Dispose();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using NSE.Clientes.API.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using NSE.Clientes.API.Models;
+using NSE.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,24 +9,27 @@ namespace NSE.Clientes.API.Data.Repositories
 {
     public class ClienteRepository : IClienteRepository
     {
+        private readonly ClientesContext _contexto;
+
+        public ClienteRepository(ClientesContext contexto)
+        {
+            _contexto = contexto;
+        }
+
+        public IUnitOfWork UnitOfWork => _contexto;
+
         public void Adicionar(Cliente cliente)
         {
-            throw new NotImplementedException();
+            _contexto.Clientes.Add(cliente);
         }
 
-        public Task<Cliente> ObterPorCpf(string cpf)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Cliente> ObterPorCpf(string cpf) => await _contexto.Clientes.FirstOrDefaultAsync(c => c.Cpf.Numero == cpf);
 
-        public Task<IEnumerable<Cliente>> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Cliente>> ObterTodos() => await _contexto.Clientes.AsNoTracking().ToListAsync();
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _contexto?.Dispose();
         }
     }
 }

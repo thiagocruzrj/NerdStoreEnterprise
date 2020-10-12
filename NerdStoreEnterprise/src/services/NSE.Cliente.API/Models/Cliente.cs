@@ -1,4 +1,5 @@
 ﻿using NSE.Core.DomainObjects;
+using System;
 
 namespace NSE.Cliente.API.Models
 {
@@ -11,6 +12,9 @@ namespace NSE.Cliente.API.Models
             Cpf = cpf;
             Excluido = false;
         }
+
+        // EF Relation
+        protected Cliente() { }
 
         public string Nome { get; private set; }
         public string Email { get; private set; }
@@ -32,6 +36,10 @@ namespace NSE.Cliente.API.Models
             Estado = estado;
         }
 
+        // EF Relation
+        protected Endreco() { }
+
+        public Guid ClientId { get; private set; }
         public string Logradouro { get; private set; }
         public string Numero { get; private set; }
         public string Complemento { get; private set; }
@@ -39,5 +47,8 @@ namespace NSE.Cliente.API.Models
         public string Cep { get; private set; }
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
+
+        // EF Relation
+        public Cliente Cliente { get; private set; }
     }
 }

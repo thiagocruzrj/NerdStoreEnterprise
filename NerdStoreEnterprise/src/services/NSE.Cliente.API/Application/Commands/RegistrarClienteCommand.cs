@@ -43,14 +43,8 @@ namespace NSE.Clientes.API.Application.Commands
                 .WithMessage("O e-mail informado não é válido.");
         }
 
-        protected static bool TerCpfValido(string cpf)
-        {
-            return Cpf.Validar(cpf);
-        }
+        protected static bool TerCpfValido(string cpf) => Cpf.Validar(cpf);
 
-        protected static bool TerEmailValido(string email)
-        {
-            return Email.Validar(email);
-        }
+        protected static bool TerEmailValido(string email) => Email.Validar(email);
     }
 }

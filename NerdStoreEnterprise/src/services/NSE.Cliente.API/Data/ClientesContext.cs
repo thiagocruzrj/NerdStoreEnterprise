@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NSE.Cliente.API.Data
 {
-    public sealed class ClienteContext : DbContext, IUnitOfWork
+    public sealed class ClientesContext : DbContext, IUnitOfWork
     {
-        public ClienteContext(DbContextOptions<ClienteContext> options) : base(options)
+        public ClientesContext(DbContextOptions<ClientesContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
@@ -27,7 +27,7 @@ namespace NSE.Cliente.API.Data
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClienteContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClientesContext).Assembly);
         }
 
         public async Task<bool> Commit() => await base.SaveChangesAsync() > 0;

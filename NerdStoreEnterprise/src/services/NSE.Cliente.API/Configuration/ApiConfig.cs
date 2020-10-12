@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NSE.Cliente.API.Data;
+using Microsoft.Extensions.Hosting;
 
 namespace NSE.Cliente.API.Configuration
 {
@@ -22,6 +24,27 @@ namespace NSE.Cliente.API.Configuration
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader());
+            });
+        }
+
+        public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseCors("Total");
+
+            app.UseAuthConfiguration();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
         }
     }

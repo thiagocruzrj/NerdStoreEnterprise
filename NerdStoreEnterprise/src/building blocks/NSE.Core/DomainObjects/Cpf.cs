@@ -41,7 +41,7 @@ namespace NSE.Core.DomainObjects
 			else
 				resto = 11 - resto;
 			digito = resto.ToString();
-			tempCpf = tempCpf + digito;
+			tempCpf += digito;
 			soma = 0;
 			for (int i = 0; i < 10; i++)
 				soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
@@ -50,7 +50,7 @@ namespace NSE.Core.DomainObjects
 				resto = 0;
 			else
 				resto = 11 - resto;
-			digito = digito + resto.ToString();
+			digito += resto.ToString();
 			return cpf.EndsWith(digito);
 		}
 	}

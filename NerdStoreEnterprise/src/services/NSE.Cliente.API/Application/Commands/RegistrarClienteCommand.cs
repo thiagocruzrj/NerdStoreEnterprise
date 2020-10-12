@@ -16,6 +16,12 @@ namespace NSE.Clientes.API.Application.Commands
             Cpf = cpf;
         }
 
+        public override bool EhValido()
+        {
+            ValidationResult = new RegistrarClienteValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
+
         public Guid Id { get; private set; }
         public string Nome { get; private set; }
         public string Email { get; private set; }

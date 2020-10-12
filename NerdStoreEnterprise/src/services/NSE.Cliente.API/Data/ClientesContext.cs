@@ -38,7 +38,7 @@ namespace NSE.Clientes.API.Data
         public async Task<bool> Commit()
         {
             var sucesso = await base.SaveChangesAsync() > 0;
-            if (sucesso) await _mediator.PublicarEvento();
+            if (sucesso) await _mediator.PublicarEventos(this);
 
             return sucesso;
         }

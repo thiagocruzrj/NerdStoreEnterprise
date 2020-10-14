@@ -11,9 +11,9 @@ namespace NSE.Clientes.API.Data
 {
     public sealed class ClientesContext : DbContext, IUnitOfWork
     {
+        private readonly IMediatorHandler _mediator;
 
-        private readonly MediatorHandler _mediator;
-        public ClientesContext(DbContextOptions<ClientesContext> options, MediatorHandler mediator) : base(options)
+        public ClientesContext(DbContextOptions<ClientesContext> options, IMediatorHandler mediator) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
@@ -40,7 +40,7 @@ namespace NSE.Clientes.API.Data
 
         public async Task<bool> Commit()
         {
-            var sucesso = await base.SaveChangesAsync() > 0;
+            var sucesso = await SaveChangesAsync() > 0;
             if (sucesso) await _mediator.PublicarEventos(this);
 
             return sucesso;

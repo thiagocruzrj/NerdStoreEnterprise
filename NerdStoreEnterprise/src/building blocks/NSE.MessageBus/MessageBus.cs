@@ -1,5 +1,7 @@
 ﻿using EasyNetQ;
 using NSE.Core.Messages.Integration;
+using Polly;
+using RabbitMQ.Client.Exceptions;
 using System;
 using System.Threading.Tasks;
 
@@ -77,6 +79,12 @@ namespace NSE.MessageBus
         private void TryConnect()
         {
             if (IsConnected) return;
+
+            var policy = Policy.Handle<EasyNetQException>()
+                .Or<BrokerUnreachableException>()
+                .WaitAndRetry(3, retryAttempt =>
+                    TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
             _bus = RabbitHutch.CreateBus(_connStr);
         }
 

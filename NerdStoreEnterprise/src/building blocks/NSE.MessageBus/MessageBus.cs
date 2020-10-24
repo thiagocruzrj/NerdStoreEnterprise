@@ -30,6 +30,17 @@ namespace NSE.MessageBus
             await _bus.PublishAsync(message);
         }
 
+        public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class
+        {
+            TryConnect();
+            _bus.Subscribe(subscriptionId, onMessage);
+        }
+
+        public void SubscribeAsync<T>(string subscriptionId, Action<T, Task> onMessage) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
         public TResponse Request<TRequest, TResponse>(TRequest request)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
@@ -54,16 +65,6 @@ namespace NSE.MessageBus
         public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SubscribeAsync<T>(string subscriptionId, Action<T, Task> onMessage) where T : class
         {
             throw new NotImplementedException();
         }

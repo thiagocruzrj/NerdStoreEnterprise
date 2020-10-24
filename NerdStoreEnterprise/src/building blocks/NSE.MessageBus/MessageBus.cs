@@ -16,7 +16,7 @@ namespace NSE.MessageBus
             TryConnect();
         }
 
-        public bool IsConnected { get; }
+        public bool IsConnected => _bus?.IsConnected ?? false;
 
         public void Publish<T>(T message) where T : IntegrationEvent
         {
@@ -26,7 +26,8 @@ namespace NSE.MessageBus
 
         public Task PublishAsync<T>(T message) where T : IntegrationEvent
         {
-            throw new NotImplementedException();
+            TryConnect();
+            _bus.PublishAsync(message);
         }
 
         public TResponse Request<TRequest, TResponse>(TRequest request)

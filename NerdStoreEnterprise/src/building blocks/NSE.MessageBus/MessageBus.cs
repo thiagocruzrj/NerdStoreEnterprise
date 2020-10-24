@@ -24,10 +24,10 @@ namespace NSE.MessageBus
             _bus.Publish(message);
         }
 
-        public Task PublishAsync<T>(T message) where T : IntegrationEvent
+        public async Task PublishAsync<T>(T message) where T : IntegrationEvent
         {
             TryConnect();
-            _bus.PublishAsync(message);
+            await _bus.PublishAsync(message);
         }
 
         public TResponse Request<TRequest, TResponse>(TRequest request)

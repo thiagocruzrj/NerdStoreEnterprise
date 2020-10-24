@@ -8,9 +8,14 @@ namespace NSE.MessageBus
     public class MessageBus : IMessageBus
     {
         private IBus _bus;
+        private readonly string _connStr;
 
-        public bool IsConnected => throw new NotImplementedException();
+        public MessageBus(string connStr)
+        {
+            _connStr = connStr;
+        }
 
+        public bool IsConnected { get; }
 
         public void Publish<T>(T message) where T : IntegrationEvent
         {
@@ -59,6 +64,13 @@ namespace NSE.MessageBus
         {
             throw new NotImplementedException();
         }
+
+        private void TryConnect()
+        {
+            if (IsConnected) return;
+            _bus = RabbitHutch.CreateBus(_connStr);
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();

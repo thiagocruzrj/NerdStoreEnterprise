@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NSE.WebApp.MVC.Extensions;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

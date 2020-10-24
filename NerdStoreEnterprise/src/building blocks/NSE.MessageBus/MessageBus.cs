@@ -13,13 +13,15 @@ namespace NSE.MessageBus
         public MessageBus(string connStr)
         {
             _connStr = connStr;
+            TryConnect();
         }
 
         public bool IsConnected { get; }
 
         public void Publish<T>(T message) where T : IntegrationEvent
         {
-            throw new NotImplementedException();
+            TryConnect();
+            _bus.Publish(message);
         }
 
         public Task PublishAsync<T>(T message) where T : IntegrationEvent

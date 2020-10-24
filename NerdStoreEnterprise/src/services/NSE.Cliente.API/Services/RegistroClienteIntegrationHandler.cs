@@ -13,11 +13,6 @@ namespace NSE.Clientes.API.Services
     {
         private IBus _bus;
 
-        public RegistroClienteIntegrationHandler(IBus bus)
-        {
-            _bus = bus;
-        }
-
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _bus = RabbitHutch.CreateBus("host=localhost:5672");

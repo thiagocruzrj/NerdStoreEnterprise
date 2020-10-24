@@ -85,7 +85,10 @@ namespace NSE.MessageBus
                 .WaitAndRetry(3, retryAttempt =>
                     TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-            _bus = RabbitHutch.CreateBus(_connStr);
+            policy.Execute(() =>
+            {
+                _bus = RabbitHutch.CreateBus(_connStr);
+            });
         }
 
         public void Dispose()

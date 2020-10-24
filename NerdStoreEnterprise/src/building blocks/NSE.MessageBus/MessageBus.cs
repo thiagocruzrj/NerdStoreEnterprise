@@ -66,11 +66,12 @@ namespace NSE.MessageBus
             return _bus.Respond(responder);
         }
 
-        public async IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
+        public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
-            throw new NotImplementedException();
+            TryConnect();
+            return _bus.RespondAsync(responder);
         }
 
         private void TryConnect()

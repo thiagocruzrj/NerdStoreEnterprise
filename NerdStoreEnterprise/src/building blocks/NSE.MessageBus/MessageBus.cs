@@ -54,6 +54,8 @@ namespace NSE.MessageBus
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
+            TryConnect();
+            return await _bus.RequestAsync<TRequest, TResponse>(request);
         }
 
         public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)

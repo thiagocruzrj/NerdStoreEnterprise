@@ -36,9 +36,10 @@ namespace NSE.MessageBus
             _bus.Subscribe(subscriptionId, onMessage);
         }
 
-        public void SubscribeAsync<T>(string subscriptionId, Action<T, Task> onMessage) where T : class
+        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
         {
-            throw new NotImplementedException();
+            TryConnect();
+            _bus.SubscribeAsync(subscriptionId, onMessage);
         }
 
         public TResponse Request<TRequest, TResponse>(TRequest request)

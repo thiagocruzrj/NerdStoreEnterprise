@@ -1,6 +1,7 @@
 ﻿using EasyNetQ;
 using FluentValidation.Results;
 using Microsoft.Extensions.Hosting;
+using NSE.Clientes.API.Application.Commands;
 using NSE.Core.Messages.Integration;
 using System;
 using System.Threading;
@@ -28,7 +29,7 @@ namespace NSE.Clientes.API.Services
 
         private async Task<ValidationResult> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
         {
-
+            var clienteCommand = new RegistrarClienteCommand(message.Id, message.Nome, message.Email, message.Cpf);
         }
     }
 }

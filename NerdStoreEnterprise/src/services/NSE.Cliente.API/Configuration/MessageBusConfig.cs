@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NSE.Core.Utils;
+using NSE.MessageBus;
 
 namespace NSE.Clientes.API.Configuration
 {
@@ -7,7 +9,7 @@ namespace NSE.Clientes.API.Configuration
     {
         public static void AddMessageBusConfigurarion(this IServiceCollection services, IConfiguration configuration)
         {
-
+            services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"));
         }
     }
 }

@@ -81,9 +81,7 @@ namespace NSE.Identidade.API.Controllers
                 false, true);
 
             if (result.Succeeded)
-            {
                 return CustomResponse(await GerarJwt(usuarioLogin.Email));
-            }
 
             if (result.IsLockedOut)
             {

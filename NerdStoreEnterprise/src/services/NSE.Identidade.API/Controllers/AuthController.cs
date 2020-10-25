@@ -102,7 +102,15 @@ namespace NSE.Identidade.API.Controllers
             var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
                 Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
 
-            return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            try
+            {
+                return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(usuario);
+                throw;
+            }
         }
 
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)

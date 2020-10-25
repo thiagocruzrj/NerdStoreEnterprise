@@ -1,5 +1,4 @@
-﻿using EasyNetQ;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSE.Clientes.API.Application.Commands;
@@ -14,12 +13,13 @@ namespace NSE.Clientes.API.Services
 {
     public class RegistroClienteIntegrationHandler : BackgroundService
     {
-        private IMessageBus _bus;
+        private readonly IMessageBus _bus;
         private readonly IServiceProvider _serviceProvider;
 
-        public RegistroClienteIntegrationHandler(IServiceProvider serviceProvider)
+        public RegistroClienteIntegrationHandler(IServiceProvider serviceProvider, IMessageBus bus)
         {
             _serviceProvider = serviceProvider;
+            _bus = bus;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

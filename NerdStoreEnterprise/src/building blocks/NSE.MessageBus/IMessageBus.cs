@@ -1,4 +1,5 @@
-﻿using NSE.Core.Messages.Integration;
+﻿using EasyNetQ;
+using NSE.Core.Messages.Integration;
 using System;
 using System.Threading.Tasks;
 
@@ -28,5 +29,6 @@ namespace NSE.MessageBus
             where TResponse : ResponseMessage;
 
         bool IsConnected { get; }
+        IAdvancedBus AdvancedBus { get; }
     }
 }

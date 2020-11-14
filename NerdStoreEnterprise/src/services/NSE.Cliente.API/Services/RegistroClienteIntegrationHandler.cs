@@ -31,8 +31,7 @@ namespace NSE.Clientes.API.Services
 
         private void OnConnect(object s, EventArgs e)
         {
-            _bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request =>
-                await RegistrarCliente(request));
+            SetResponder();
         }
 
         private void SetResponder()

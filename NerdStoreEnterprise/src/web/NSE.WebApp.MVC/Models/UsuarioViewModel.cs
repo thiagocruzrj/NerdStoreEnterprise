@@ -1,7 +1,7 @@
-﻿using NSE.WebApp.MVC.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using NSE.WebApp.MVC.Extensions;
 
 namespace NSE.WebApp.MVC.Models
 {
@@ -18,7 +18,7 @@ namespace NSE.WebApp.MVC.Models
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
-        [DisplayName("E-mail")]
+        [DisplayName("E-mail")] 
         public string Email { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

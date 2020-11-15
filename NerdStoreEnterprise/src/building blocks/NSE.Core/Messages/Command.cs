@@ -1,6 +1,6 @@
-﻿using FluentValidation.Results;
+﻿using System;
+using FluentValidation.Results;
 using MediatR;
-using System;
 
 namespace NSE.Core.Messages
 {
@@ -12,7 +12,6 @@ namespace NSE.Core.Messages
         protected Command()
         {
             Timestamp = DateTime.Now;
-
         }
 
         public virtual bool EhValido()

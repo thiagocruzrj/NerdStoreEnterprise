@@ -1,20 +1,22 @@
-﻿using EasyNetQ;
+﻿using System;
+using System.Threading.Tasks;
+using EasyNetQ;
 using NSE.Core.Messages.Integration;
 using Polly;
 using RabbitMQ.Client.Exceptions;
-using System;
-using System.Threading.Tasks;
 
 namespace NSE.MessageBus
 {
     public class MessageBus : IMessageBus
     {
         private IBus _bus;
-        private readonly string _connStr;
+        private IAdvancedBus _advancedBus;
 
-        public MessageBus(string connStr)
+        private readonly string _connectionString;
+
+        public MessageBus(string connectionString)
         {
-            _connStr = connStr;
+            _connectionString = connectionString;
             TryConnect();
         }
 
@@ -45,8 +47,7 @@ namespace NSE.MessageBus
             _bus.SubscribeAsync(subscriptionId, onMessage);
         }
 
-        public TResponse Request<TRequest, TResponse>(TRequest request)
-            where TRequest : IntegrationEvent
+        public TResponse Request<TRequest, TResponse>(TRequest request) where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
@@ -54,24 +55,21 @@ namespace NSE.MessageBus
         }
 
         public async Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
-            where TRequest : IntegrationEvent
-            where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent where TResponse : ResponseMessage
         {
             TryConnect();
             return await _bus.RequestAsync<TRequest, TResponse>(request);
         }
 
         public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)
-            where TRequest : IntegrationEvent
-            where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent where TResponse : ResponseMessage
         {
             TryConnect();
             return _bus.Respond(responder);
         }
 
         public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
-            where TRequest : IntegrationEvent
-            where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent where TResponse : ResponseMessage
         {
             TryConnect();
             return _bus.RespondAsync(responder);
@@ -79,7 +77,7 @@ namespace NSE.MessageBus
 
         private void TryConnect()
         {
-            if (IsConnected) return;
+            if(IsConnected) return;
 
             var policy = Policy.Handle<EasyNetQException>()
                 .Or<BrokerUnreachableException>()
@@ -88,7 +86,7 @@ namespace NSE.MessageBus
 
             policy.Execute(() =>
             {
-                _bus = RabbitHutch.CreateBus(_connStr);
+                _bus = RabbitHutch.CreateBus(_connectionString);
                 _advancedBus = _bus.Advanced;
                 _advancedBus.Disconnected += OnDisconnect;
             });

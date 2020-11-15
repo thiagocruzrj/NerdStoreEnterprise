@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Logging;
 using NSE.Identidade.API.Data;
 using NSE.Identidade.API.Extensions;
 using NSE.WebAPI.Core.Identidade;
@@ -11,11 +10,11 @@ namespace NSE.Identidade.API.Configuration
 {
     public static class IdentityConfig
     {
-        public static void AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services,
+            IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
-            IdentityModelEventSource.ShowPII = true;
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
@@ -24,6 +23,8 @@ namespace NSE.Identidade.API.Configuration
                 .AddDefaultTokenProviders();
 
             services.AddJwtConfiguration(configuration);
+
+            return services;
         }
     }
 }

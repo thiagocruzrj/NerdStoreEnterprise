@@ -4,13 +4,14 @@ using NSE.Catalogo.API.Models;
 using NSE.Core.Data;
 using System.Threading.Tasks;
 using FluentValidation.Results;
-using NSE.Core.Mediator;
+using NSE.Core.Messages;
 
 namespace NSE.Catalogo.API.Data
 {
     public class CatalogoContext : DbContext, IUnitOfWork
     {
-        public CatalogoContext(DbContextOptions<CatalogoContext> options) : base(options) { }
+        public CatalogoContext(DbContextOptions<CatalogoContext> options)
+            : base(options) { }
 
         public DbSet<Produto> Produtos { get; set; }
         
@@ -26,6 +27,9 @@ namespace NSE.Catalogo.API.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);
         }
 
-        public async Task<bool> Commit() => await base.SaveChangesAsync() > 0;
+        public async Task<bool> Commit()
+        {
+            return await base.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -14,12 +14,15 @@ namespace NSE.Identidade.API
         public Startup(IHostEnvironment hostEnvironment)
         {
             var builder = new ConfigurationBuilder()
-                              .SetBasePath(hostEnvironment.ContentRootPath)
-                              .AddJsonFile("appsettings.json", true, true)
-                              .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true);
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
 
             if (hostEnvironment.IsDevelopment())
+            {
                 builder.AddUserSecrets<Startup>();
+            }
 
             Configuration = builder.Build();
         }
@@ -27,14 +30,18 @@ namespace NSE.Identidade.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityConfiguration(Configuration);
+
             services.AddApiConfiguration();
+
             services.AddSwaggerConfiguration();
-            services.AddMessageBusConfigurarion(Configuration);
+
+            services.AddMessageBusConfiguration(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwaggerConfiguration();
+            
             app.UseApiConfiguration(env);
         }
     }

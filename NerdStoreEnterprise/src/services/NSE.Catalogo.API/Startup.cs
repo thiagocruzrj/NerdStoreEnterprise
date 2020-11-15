@@ -31,14 +31,18 @@ namespace NSE.Catalogo.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApiConfiguration(Configuration);
+
             services.AddJwtConfiguration(Configuration);
+
             services.AddSwaggerConfiguration();
+
             services.RegisterServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwaggerConfiguration();
+
             app.UseApiConfiguration(env);
         }
     }
